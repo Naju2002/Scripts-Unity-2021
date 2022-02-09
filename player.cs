@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class player : MonoBehaviour
 {
@@ -14,9 +16,17 @@ public class player : MonoBehaviour
     private Rigidbody2D rig;
     private Animator anim;
 
+    //Pause 
+
+    private bool isPaused;
+
+    [Header("Paineis e Menu")]
+    public GameObject pausePanel;
+    public string cena;
 
     void Start()
     {
+        Time.timeScale = 1f;
         rig = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
@@ -24,8 +34,42 @@ public class player : MonoBehaviour
 
     void Update()
     {
-        Move();
-        Jump();
+        if (!isPaused)
+        {
+            Move();
+            Jump();
+        }
+        
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseScreen();
+        }
+    }
+
+    void PauseScreen()
+    {
+        if(isPaused)
+        {
+            isPaused = false;
+            Time.timeScale = 1f;
+            pausePanel.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            isPaused = true;
+            Time.timeScale = 0f;
+            pausePanel.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(cena); 
     }
 
     void Move()
