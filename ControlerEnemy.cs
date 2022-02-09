@@ -11,7 +11,7 @@ public class ControlerEnemy : MonoBehaviour
     protected bool isMoving = false;
 
     protected Rigidbody2D rd2d;
-    protected Animator anin;
+    protected Animator anim;
     public Transform player;
     protected SpriteRenderer sprite;
 
@@ -19,7 +19,7 @@ public class ControlerEnemy : MonoBehaviour
     void Awake()
     {
         rd2d = GetComponent<Rigidbody2D>();
-        anin = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
     }
 
@@ -34,4 +34,8 @@ public class ControlerEnemy : MonoBehaviour
         speed *= -1;
     }
 
+    protected void OnTriggerEnter2D(Collider2D other)
+    {
+
+    }
 }
